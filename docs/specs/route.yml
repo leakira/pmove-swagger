@@ -1,0 +1,244 @@
+openapi: "3.0.0"
+info:
+  version: 3.0.0
+  title: Gestão de rotas
+servers:
+- url: http://working-pmove.planmob.com.br/api/v1/rest
+paths:
+  /route:
+    get:
+      summary: Lista todas as rotas
+      operationId: listRoute
+      tags:
+      - Route
+      responses:
+        '200':
+          description: Exemplo de modelo
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Route"
+            'application/xml':
+              schema:
+                $ref: "#/components/schemas/Route"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Criar rota
+      operationId: createRoute
+      tags:
+      - Route
+      requestBody:
+        description: Modelo payload
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Route'
+          'application/xml':
+            schema:
+              $ref: '#/components/schemas/Route'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Route:
+      required:
+      - group
+      - qrcode
+      - sla
+      - addressComponent
+      properties:
+        group:
+          type: string
+        contract:
+          type: string
+        planning:
+          type: string
+          description: _Concatena a rota em planejamento existente_
+        planningChild:
+          type: string
+          description: _Compartilha a rota com um planejamento existente_
+        attendant:
+          type: string
+          description: _Atendente de preferencia para realizar o atendimento_
+        qrcode:
+          type: string
+        reference:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        order:
+          type: integer
+        vip:
+          type: boolean
+          default: false
+        dateSchedule:
+          type: string
+          format: date-time
+          description: _Data de agendamento_
+        dateDue:
+          type: string
+          format: date-time
+          description: _Data de vencimento_
+        sla:
+          type: integer
+        related:
+          type: array
+          items:
+            type: string
+        product:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+        contact:
+          type: array
+          items:
+            $ref: "#/components/schemas/Contact"
+        app:
+          $ref: "#/components/schemas/App"
+        fenceOption:
+          $ref: "#/components/schemas/FenceOption"
+        addressComponent:
+          $ref: "#/components/schemas/AddressComponent"
+        schedule:
+          $ref: "#/components/schemas/Schedule"
+        information:
+          type: array
+          items:
+            $ref: "#/components/schemas/Custom"
+    Product:
+      required:
+      - qrcode
+      - name
+      properties:
+        qrcode:
+          type: string
+        name:
+          type: string
+        custom:
+          type: array
+          items:
+            $ref: "#/components/schemas/Custom"
+    Contact:
+      required:
+      - qrcode
+      - name
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        custom:
+          type: array
+          items:
+            $ref: "#/components/schemas/Custom"
+    Custom:
+      required:
+      - label
+      - value
+      - type
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+    App:
+      properties:
+        displacement:
+          type: boolean
+          default: false
+        send:
+          type: boolean
+          default: false
+        receive:
+          type: boolean
+          default: false
+        packageUnregistered:
+          type: boolean
+          default: true
+        signature:
+          $ref: "#/components/schemas/Signature"
+    Signature:
+      properties:
+        enabled:
+          type: boolean
+          default: true
+        requiredFields:
+          type: array
+          enum:
+          - Nome
+          - E-mail
+          - RG
+          - CPF
+          - Telefone
+          - Matrícula
+          items:
+            type: string
+    FenceOption:
+      properties:
+        minimum:
+          type: integer
+        maximum:
+          type: integer
+    AddressComponent:
+      required:
+      - address
+      - latitude
+      - longitude
+      properties:
+        address:
+          type: string
+          description: _Endereço completo_
+        complement:
+          type: string
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+    Schedule:
+      properties:
+        type:
+          type: string
+          enum:
+          - 'null'
+          - PM
+          - AM
+          - TIME
+          default: 'null'
+        start:
+          type: integer
+        end:
+          type: integer
+    package:
+      type: array
+      items:
+        $ref: "./package.yml"
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

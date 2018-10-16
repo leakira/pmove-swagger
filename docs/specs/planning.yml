@@ -1,0 +1,155 @@
+openapi: "3.0.0"
+info:
+  version: 3.0.0
+  title: Gestão de planejamentos
+servers:
+- url: http://working-pmove.planmob.com.br/api/v1/rest
+paths:
+  /planning:
+    get:
+      summary: Lista todas as planejamentos
+      operationId: listRoute
+      tags:
+      - Planning
+      responses:
+        '200':
+          description: Exemplo de modelo
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Planning"
+            'application/xml':
+              schema:
+                $ref: "#/components/schemas/Planning"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Criar planejamento
+      operationId: createPlanning
+      tags:
+      - Planning
+      requestBody:
+        description: Modelo payload
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Planning'
+          'application/xml':
+            schema:
+              $ref: '#/components/schemas/Planning'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Planning:
+      required:
+      - group
+      - qrcode
+      - sla
+      - addressComponent
+      properties:
+        group:
+          type: string
+        qrcode:
+          type: string
+        description:
+          type: string
+        dateSchedule:
+          type: string
+          format: date-time
+        status:
+          type: string
+        vehicle:
+          type: string
+        app:
+          $ref: "#/components/schemas/App"
+        concierge:
+          $ref: "#/components/schemas/Concierge"
+        attendants:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attendants"
+    App:
+      properties:
+        presence:
+          type: integer
+          default: false
+          description: _Habilita controle de presença_
+        visualization:
+          type: integer
+          default: false
+          description: _1 - todos; 2 - atual e + 1; 3 - atual_
+        conciergeControl:
+          type: integer
+          default: false
+          description: _Habilita o controle de concierge.in.control e concierge.out.control_
+    Concierge:
+      properties:
+        in:
+          $ref: "#/components/schemas/ConciergeInOut"
+        out:
+          $ref: "#/components/schemas/ConciergeInOut"
+    ConciergeInOut:
+      properties:
+        control:
+          $ref: "#/components/schemas/ConciergeControl"
+    ConciergeControl:
+      properties:
+        qrcode:
+          type: string
+        fenceOption:
+          $ref: "#/components/schemas/FenceOption"
+        addressComponent:
+          $ref: "#/components/schemas/AddressComponent"
+    FenceOption:
+      properties:
+        minimum:
+          type: integer
+        maximum:
+          type: integer
+    AddressComponent:
+      required:
+      - address
+      - latitude
+      - longitude
+      properties:
+        address:
+          type: string
+          description: _Endereço completo_
+        complement:
+          type: string
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+    Attendants:
+      properties:
+        user:
+          type: string
+    route:
+      type: array
+      items:
+        $ref: "./route.yml"
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

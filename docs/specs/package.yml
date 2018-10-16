@@ -1,0 +1,81 @@
+openapi: "3.0.0"
+info:
+  version: 3.0.0
+  title: Gestão de pacotes
+servers:
+- url: http://working-pmove.planmob.com.br/api/v1/rest
+paths:
+  /package:
+    get:
+      summary: Lista todas as pacotes
+      operationId: listPackage
+      tags:
+      - Package
+      responses:
+        '200':
+          description: Exemplo de modelo
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Package"
+            'application/xml':
+              schema:
+                $ref: "#/components/schemas/Package"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Criar pacote
+      operationId: createPackage
+      tags:
+      - Package
+      requestBody:
+        description: Modelo payload
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Package'
+          'application/xml':
+            schema:
+              $ref: '#/components/schemas/Package'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Package:
+      required:
+      - group
+      - qrcode
+      properties:
+        group:
+          type: string
+        route:
+          type: string
+        qrcode:
+          type: string
+        description:
+          type: string
+        type:
+          type: integer
+        status:
+          type: string
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
