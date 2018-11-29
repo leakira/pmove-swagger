@@ -1,0 +1,129 @@
+openapi: "3.0.0"
+info:
+  version: 3.0.0
+  title: Gestão de usuários
+servers:
+- url: http://working-pmove.planmob.com.br/api/v1/rest
+paths:
+  /user:
+    get:
+      summary: Lista todos usuários
+      operationId: listUser
+      tags:
+      - User
+      responses:
+        '200':
+          description: Exemplo de modelo
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/User"
+            'application/xml':
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Criar usuário
+      operationId: createUser
+      tags:
+      - User
+      requestBody:
+        description: Modelo payload
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/User'
+          'application/xml':
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    User:
+      required:
+      - subsidiary
+      - group
+      - profile
+      - qrcode
+      - name
+      - email
+      - password
+      - active
+      - unblockedApp
+      properties:
+        subsidiary:
+          type: string
+        group:
+          type: string
+        region:
+          type: string
+        profile:
+          type: string
+        qrcode:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        active:
+          type: integer
+          default: 1
+        addressComponent:
+          $ref: "#/components/schemas/AddressComponent"
+        workRange:
+          $ref: "#/components/schemas/WorkRange"
+    AddressComponent:
+      required:
+      - address
+      - latitude
+      - longitude
+      properties:
+        address:
+          type: string
+          description: _Endereço completo_
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+    WorkRange:
+      properties:
+        start:
+          type: integer
+        end:
+          type: integer
+        breaks:
+          type: array
+          $ref: "#/components/schemas/Break"
+    Break:
+      properties:
+        start:
+          type: integer
+        end:
+          type: integer
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
