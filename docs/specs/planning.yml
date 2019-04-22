@@ -96,7 +96,7 @@ components:
           description: _Habilita o controle de concierge.in.control e concierge.out.control_
     Concierge:
       properties:
-        in:
+        enter:
           $ref: "#/components/schemas/ConciergeInOut"
         out:
           $ref: "#/components/schemas/ConciergeInOut"
