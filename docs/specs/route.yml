@@ -54,51 +54,92 @@ components:
   schemas:
     Route:
       required:
+      - company
       - group
       - qrcode
+      - name
+      - status
+      - dateDue
+      - dateInsert
+      - userInsert
+      - dateUpdate
+      - userUpdate
       - sla
       - addressComponent
       properties:
+        company:
+          type: string
         group:
           type: string
         contract:
           type: string
         planning:
           type: string
-          description: _Concatena a rota em planejamento existente_
         planningChild:
           type: string
-          description: _Compartilha a rota com um planejamento existente_
         attendant:
-          type: string
-          description: _Atendente de preferencia para realizar o atendimento_
-        qrcode:
+          type: array
+          items:
+            type: string
+        related:
+          type: array
+          items:
+            type: string
+        relatedAlias:
           type: string
         reference:
+          type: string
+        description:
+          type: string
+        qrcode:
           type: string
         name:
           type: string
         status:
           type: string
         order:
-          type: integer
+          type: number
         vip:
           type: boolean
           default: false
+          
+        dateDisplacement:
+          type: string
+          format: date-time
+        dateStart:
+          type: string
+          format: date-time
+        dateEnd:
+          type: string
+          format: date-time
         dateSchedule:
           type: string
           format: date-time
-          description: _Data de agendamento_
         dateDue:
           type: string
           format: date-time
-          description: _Data de vencimento_
+        dateInsert:
+          type: string
+          format: date-time
+        userInsert:
+          type: string
+        dateUpdate:
+          type: string
+          format: date-time
+        userUpdate:
+          type: string
+        sync:
+          type: boolean
+          default: false
+
         sla:
-          type: integer
-        related:
           type: array
           items:
-            type: string
+            $ref: "#/components/schemas/Sla"
+        time:
+          type: array
+          items:
+            $ref: "#/components/schemas/Time"
         product:
           type: array
           items:
@@ -107,6 +148,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Contact"
+        parts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Parts"
         app:
           $ref: "#/components/schemas/App"
         fenceOption:
@@ -119,39 +164,50 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Custom"
-    Product:
+    Sla:
       required:
-      - qrcode
-      - name
+      - text
+      - value
+      properties:
+        text:
+          type: string
+        value:
+          type: number
+    Time:
+      properties:
+        text:
+          type: string
+        value:
+          type: number
+    Product:
       properties:
         qrcode:
           type: string
         name:
-          type: string
+          type: array
+          items:
+            type: string
         custom:
           type: array
           items:
             $ref: "#/components/schemas/Custom"
     Contact:
-      required:
-      - qrcode
-      - name
       properties:
         name:
           type: string
         email:
-          type: string
+          type: array
+          items:
+            type: string
         phone:
-          type: string
+          type: array
+          items:
+            type: string
         custom:
           type: array
           items:
             $ref: "#/components/schemas/Custom"
     Custom:
-      required:
-      - label
-      - value
-      - type
       properties:
         label:
           type: string
@@ -159,6 +215,18 @@ components:
           type: string
         type:
           type: string
+    Parts:
+      properties:
+        qrcode:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: number
     App:
       properties:
         displacement:
@@ -179,7 +247,7 @@ components:
       properties:
         enabled:
           type: boolean
-          default: true
+          default: false
         requiredFields:
           type: array
           enum:
@@ -189,31 +257,25 @@ components:
           - CPF
           - Telefone
           - Matrícula
+          - Avaliação
           items:
             type: string
     FenceOption:
       properties:
         minimum:
-          type: integer
+          type: number
         maximum:
-          type: integer
+          type: number
     AddressComponent:
-      required:
-      - address
-      - latitude
-      - longitude
       properties:
         address:
           type: string
-          description: _Endereço completo_
         complement:
           type: string
         latitude:
-          type: number
-          format: float
+          type: string
         longitude:
-          type: number
-          format: float
+          type: string
     Schedule:
       properties:
         type:
@@ -225,9 +287,27 @@ components:
           - TIME
           default: 'null'
         start:
-          type: integer
+          type: number
         end:
-          type: integer
+          type: number
+    
+    Router:
+      properties:
+        text:
+          type: string
+    SurveyAnswer:
+      properties:
+        text:
+          type: string
+    Information:
+      properties:
+        text:
+          type: string
+    Log:
+      properties:
+        text:
+          type: string
+          
     package:
       type: array
       items:
@@ -238,7 +318,7 @@ components:
       - message
       properties:
         code:
-          type: integer
+          type: number
           format: int32
         message:
           type: string
