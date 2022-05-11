@@ -1,9 +1,9 @@
 openapi: "3.0.0"
 info:
   version: 3.0.0
-  title: Gestão de rotas
+  title: "Gestão de rotas"
 servers:
-- url: http://working-pmove.planmob.com.br/api/v1/rest
+- url: "http://working-pmove.planmob.com.br/api/v1/rest"
 paths:
   /route:
     get:
@@ -54,271 +54,354 @@ components:
   schemas:
     Route:
       required:
-      - company
-      - group
-      - qrcode
-      - name
-      - status
-      - dateDue
-      - dateInsert
-      - userInsert
-      - dateUpdate
-      - userUpdate
-      - sla
-      - addressComponent
+      - "company"
+      - "group"
+      - "qrcode"
+      - "name"
+      - "status"
+      - "dateDue"
+      - "dateInsert"
+      - "userInsert"
+      - "dateUpdate"
+      - "userUpdate"
       properties:
         company:
-          type: string
+          type: "string"
         group:
-          type: string
+          type: "string"
         contract:
-          type: string
+          type: "string"
         planning:
-          type: string
+          type: "string"
         planningChild:
-          type: string
+          type: "string"
         attendant:
-          type: array
+          type: "array"
           items:
-            type: string
+            type: "string"
         related:
-          type: array
+          type: "array"
           items:
-            type: string
+            type: "string"
         relatedAlias:
-          type: string
+          type: "string"
         reference:
-          type: string
+          type: "string"
         description:
-          type: string
+          type: "string"
         qrcode:
-          type: string
+          type: "string"
         name:
-          type: string
+          type: "string"
         status:
-          type: string
+          type: "string"
         order:
-          type: number
+          type: "number"
         vip:
-          type: boolean
+          type: "boolean"
           default: false
-          
         dateDisplacement:
-          type: string
-          format: date-time
+          type: "string"
+          format: "date-time"
         dateStart:
-          type: string
-          format: date-time
+          type: "string"
+          format: "date-time"
         dateEnd:
-          type: string
-          format: date-time
+          type: "string"
+          format: "date-time"
         dateSchedule:
-          type: string
-          format: date-time
+          type: "string"
+          format: "date-time"
         dateDue:
-          type: string
-          format: date-time
+          type: "string"
+          format: "date-time"
         dateInsert:
-          type: string
-          format: date-time
+          type: "string"
+          format: "date-time"
         userInsert:
-          type: string
+          type: "string"
         dateUpdate:
-          type: string
-          format: date-time
+          type: "string"
+          format: "date-time"
         userUpdate:
-          type: string
+          type: "string"
         sync:
-          type: boolean
+          type: "boolean"
           default: false
-
         sla:
-          type: array
-          items:
-            $ref: "#/components/schemas/Sla"
+          type: "object"
+          required:
+          - "text"
+          - "value"
+          properties:
+            text:
+              type: "string"
+            value:
+              type: "number"
         time:
-          type: array
-          items:
-            $ref: "#/components/schemas/Time"
+          type: "object"
+          properties:
+            text:
+              type: "string"
+            value:
+              type: "number"
         product:
-          type: array
+          type: "array"
           items:
             $ref: "#/components/schemas/Product"
         contact:
-          type: array
+          type: "array"
           items:
             $ref: "#/components/schemas/Contact"
         parts:
-          type: array
+          type: "array"
           items:
             $ref: "#/components/schemas/Parts"
         app:
-          $ref: "#/components/schemas/App"
+          type: "object"
+          properties:
+            displacement:
+              type: "boolean"
+              default: false
+            send:
+              type: "boolean"
+              default: false
+            receive:
+              type: "boolean"
+              default: false
+            packageUnregistered:
+              type: "boolean"
+              default: true
+            signature:
+              type: "object"
+              properties:
+                enabled:
+                  type: "boolean"
+                  default: false
+                requiredFields:
+                  type: "array"
+                  enum:
+                  - "Nome"
+                  - "E-mail"
+                  - "RG"
+                  - "CPF"
+                  - "Telefone"
+                  - "Matrícula"
+                  - "Avaliação"
+                  items:
+                    type: "string"
+        signature:
+          type: "object"
+          properties:
+            data:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                  value:
+                    type: "string"
+            questions:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  label:
+                    type: "string"
+                  type:
+                    type: "string"
+                  options:
+                    type: "array"
+                    items:
+                      type: "string"
+                  answer:
+                    type: "string"
+            image:
+              type: "string"
         fenceOption:
-          $ref: "#/components/schemas/FenceOption"
+          type: "object"
+          properties:
+            minimum:
+              type: "number"
+            maximum:
+              type: "number"
         addressComponent:
-          $ref: "#/components/schemas/AddressComponent"
+          properties:
+            address:
+              type: "string"
+            complement:
+              type: "string"
+            latitude:
+              type: "string"
+            longitude:
+              type: "string"
         schedule:
           $ref: "#/components/schemas/Schedule"
+        router:
+          type: "object"
+          properties:
+            dateStart:
+              type: "string"
+              format: "date-time"
+            dateEnd:
+              type: "string"
+              format: "date-time"
+            km:
+              type: "number"
+        surveyAnswer:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              survey:
+                type: "array"
+                items:
+                  type: "object"
+              answer:
+                type: "object"
+              status:
+                type: "string"
         information:
-          type: array
+          type: "array"
           items:
-            $ref: "#/components/schemas/Custom"
-    Sla:
-      required:
-      - text
-      - value
-      properties:
-        text:
-          type: string
-        value:
-          type: number
-    Time:
-      properties:
-        text:
-          type: string
-        value:
-          type: number
+            type: "object"
+            properties:
+              label:
+                type: "string"
+              value:
+                type: "string"
+              type:
+                type: "string"
+        logs:
+          type: "array"
+          items:
+            type: "object"
+            required:
+            - "group"
+            - "status"
+            - "dateReal"
+            - "dateInsert"
+            - "userInsert"
+            properties:
+              group:
+                type: "string"
+              planning:
+                type: "string"
+              contract:
+                type: "string"
+              status:
+                type: "string"
+              reason:
+                type: "string"
+              latitude:
+                type: "string"
+              longitude:
+                type: "string"
+              accuracy:
+                type: "number"
+              fence:
+                type: "number"
+              distanceFromPrevious:
+                type: "number"
+              timeFromPrevious:
+                type: "number"
+              dateReal:
+                type: "string"
+                format: "date-time"
+              dateInsert:
+                type: "string"
+                format: "date-time"
+              userInsert:
+                type: "string"
     Product:
+      type: "object"
       properties:
         qrcode:
-          type: string
+          type: "string"
         name:
-          type: array
+          type: "array"
           items:
-            type: string
+            type: "string"
         custom:
-          type: array
+          type: "array"
           items:
-            $ref: "#/components/schemas/Custom"
+            type: "object"
+            properties:
+              label:
+                type: "string"
+              value:
+                type: "string"
+              type:
+                type: "string"
     Contact:
+      type: "object"
       properties:
         name:
-          type: string
+          type: "string"
         email:
-          type: array
+          type: "array"
           items:
-            type: string
+            type: "string"
         phone:
-          type: array
+          type: "array"
           items:
-            type: string
+            type: "string"
         custom:
-          type: array
+          type: "array"
           items:
-            $ref: "#/components/schemas/Custom"
-    Custom:
-      properties:
-        label:
-          type: string
-        value:
-          type: string
-        type:
-          type: string
+            type: "object"
+            properties:
+              label:
+                type: "string"
+              value:
+                type: "string"
+              type:
+                type: "string"
     Parts:
+      type: "object"
       properties:
         qrcode:
-          type: string
+          type: "string"
         name:
-          type: string
+          type: "string"
         description:
-          type: string
+          type: "string"
         price:
-          type: number
+          type: "number"
+          format: "float"
         quantity:
-          type: number
-    App:
-      properties:
-        displacement:
-          type: boolean
-          default: false
-        send:
-          type: boolean
-          default: false
-        receive:
-          type: boolean
-          default: false
-        packageUnregistered:
-          type: boolean
-          default: true
-        signature:
-          $ref: "#/components/schemas/Signature"
-    Signature:
-      properties:
-        enabled:
-          type: boolean
-          default: false
-        requiredFields:
-          type: array
-          enum:
-          - Nome
-          - E-mail
-          - RG
-          - CPF
-          - Telefone
-          - Matrícula
-          - Avaliação
-          items:
-            type: string
-    FenceOption:
-      properties:
-        minimum:
-          type: number
-        maximum:
-          type: number
-    AddressComponent:
-      properties:
-        address:
-          type: string
-        complement:
-          type: string
-        latitude:
-          type: string
-        longitude:
-          type: string
+          type: "number"
     Schedule:
+      type: "object"
       properties:
         type:
-          type: string
-          enum:
-          - 'null'
-          - PM
-          - AM
-          - TIME
-          default: 'null'
+          type: "string"
         start:
-          type: number
+          type: "object"
+          properties:
+            text:
+              type: "string"
+            value:
+              type: "number"
         end:
-          type: number
-    
-    Router:
-      properties:
-        text:
-          type: string
-    SurveyAnswer:
-      properties:
-        text:
-          type: string
-    Information:
-      properties:
-        text:
-          type: string
-    Log:
-      properties:
-        text:
-          type: string
-          
-    package:
-      type: array
+          type: "object"
+          properties:
+            text:
+              type: "string"
+            value:
+              type: "number"
+    Package:
+      type: "array"
       items:
         $ref: "./package.yml"
     Error:
       required:
-      - code
-      - message
+      - "code"
+      - "message"
       properties:
         code:
-          type: number
-          format: int32
+          type: "number"
+          format: "int32"
         message:
-          type: string
+          type: "string"
