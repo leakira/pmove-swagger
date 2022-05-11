@@ -7,13 +7,13 @@ servers:
 paths:
   /route:
     get:
-      summary: Lista todas as rotas
-      operationId: listRoute
+      summary: "Listar todas as rotas"
+      operationId: "listRoute"
       tags:
-      - Route
+      - "Route"
       responses:
         '200':
-          description: Exemplo de modelo
+          description: "Exemplo de modelo"
           content:
             'application/json':
               schema:
@@ -22,18 +22,18 @@ paths:
               schema:
                 $ref: "#/components/schemas/Route"
         default:
-          description: unexpected error
+          description: "Unexpected error"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: Criar rota
-      operationId: createRoute
+      summary: "Criar nova rota"
+      operationId: "createRoute"
       tags:
-      - Route
+      - "Route"
       requestBody:
-        description: Modelo payload
+        description: "Modelo payload"
         content:
           'application/json':
             schema:
@@ -43,9 +43,9 @@ paths:
               $ref: '#/components/schemas/Route'
       responses:
         '200':
-          description: Null response
+          description: "Null response"
         default:
-          description: unexpected error
+          description: "Unexpected error"
           content:
             application/json:
               schema:
