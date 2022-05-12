@@ -158,38 +158,7 @@ components:
           items:
             $ref: "#/components/schemas/Parts"
         app:
-          type: "object"
-          properties:
-            displacement:
-              type: "boolean"
-              default: false
-            send:
-              type: "boolean"
-              default: false
-            receive:
-              type: "boolean"
-              default: false
-            packageUnregistered:
-              type: "boolean"
-              default: true
-            signature:
-              type: "object"
-              properties:
-                enabled:
-                  type: "boolean"
-                  default: false
-                requiredFields:
-                  type: "array"
-                  enum:
-                  - "Nome"
-                  - "E-mail"
-                  - "RG"
-                  - "CPF"
-                  - "Telefone"
-                  - "Matrícula"
-                  - "Avaliação"
-                  items:
-                    type: "string"
+          $ref: "#/components/schemas/App"
         signature:
           type: "object"
           properties:
@@ -265,55 +234,11 @@ components:
         information:
           type: "array"
           items:
-            type: "object"
-            properties:
-              label:
-                type: "string"
-              value:
-                type: "string"
-              type:
-                type: "string"
+            $ref: "#/components/schemas/Information"
         logs:
           type: "array"
           items:
-            type: "object"
-            required:
-            - "group"
-            - "status"
-            - "dateReal"
-            - "dateInsert"
-            - "userInsert"
-            properties:
-              group:
-                type: "string"
-              planning:
-                type: "string"
-              contract:
-                type: "string"
-              status:
-                type: "string"
-              reason:
-                type: "string"
-              latitude:
-                type: "string"
-              longitude:
-                type: "string"
-              accuracy:
-                type: "number"
-              fence:
-                type: "number"
-              distanceFromPrevious:
-                type: "number"
-              timeFromPrevious:
-                type: "number"
-              dateReal:
-                type: "string"
-                format: "date-time"
-              dateInsert:
-                type: "string"
-                format: "date-time"
-              userInsert:
-                type: "string"
+            $ref: "#/components/schemas/Logs"
     Product:
       type: "object"
       properties:
@@ -372,6 +297,39 @@ components:
           format: "float"
         quantity:
           type: "number"
+    App:
+      type: "object"
+          properties:
+            displacement:
+              type: "boolean"
+              default: false
+            send:
+              type: "boolean"
+              default: false
+            receive:
+              type: "boolean"
+              default: false
+            packageUnregistered:
+              type: "boolean"
+              default: true
+            signature:
+              type: "object"
+              properties:
+                enabled:
+                  type: "boolean"
+                  default: false
+                requiredFields:
+                  type: "array"
+                  enum:
+                  - "Nome"
+                  - "E-mail"
+                  - "RG"
+                  - "CPF"
+                  - "Telefone"
+                  - "Matrícula"
+                  - "Avaliação"
+                  items:
+                    type: "string"
     Schedule:
       type: "object"
       properties:
@@ -391,6 +349,54 @@ components:
               type: "string"
             value:
               type: "number"
+    Information:
+      type: "object"
+            properties:
+              label:
+                type: "string"
+              value:
+                type: "string"
+              type:
+                type: "string"
+    Logs:
+      type: "object"
+            required:
+            - "group"
+            - "status"
+            - "dateReal"
+            - "dateInsert"
+            - "userInsert"
+            properties:
+              group:
+                type: "string"
+              planning:
+                type: "string"
+              contract:
+                type: "string"
+              status:
+                type: "string"
+              reason:
+                type: "string"
+              latitude:
+                type: "string"
+              longitude:
+                type: "string"
+              accuracy:
+                type: "number"
+              fence:
+                type: "number"
+              distanceFromPrevious:
+                type: "number"
+              timeFromPrevious:
+                type: "number"
+              dateReal:
+                type: "string"
+                format: "date-time"
+              dateInsert:
+                type: "string"
+                format: "date-time"
+              userInsert:
+                type: "string"
     Package:
       type: "array"
       items:
