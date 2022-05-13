@@ -299,37 +299,37 @@ components:
           type: "number"
     App:
       type: "object"
+      properties:
+        displacement:
+          type: "boolean"
+          default: false
+        send:
+          type: "boolean"
+          default: false
+        receive:
+          type: "boolean"
+          default: false
+        packageUnregistered:
+          type: "boolean"
+          default: true
+        signature:
+          type: "object"
           properties:
-            displacement:
+            enabled:
               type: "boolean"
               default: false
-            send:
-              type: "boolean"
-              default: false
-            receive:
-              type: "boolean"
-              default: false
-            packageUnregistered:
-              type: "boolean"
-              default: true
-            signature:
-              type: "object"
-              properties:
-                enabled:
-                  type: "boolean"
-                  default: false
-                requiredFields:
-                  type: "array"
-                  enum:
-                  - "Nome"
-                  - "E-mail"
-                  - "RG"
-                  - "CPF"
-                  - "Telefone"
-                  - "Matrícula"
-                  - "Avaliação"
-                  items:
-                    type: "string"
+            requiredFields:
+              type: "array"
+              enum:
+              - "Nome"
+              - "E-mail"
+              - "RG"
+              - "CPF"
+              - "Telefone"
+              - "Matrícula"
+              - "Avaliação"
+              items:
+                type: "string"
     Schedule:
       type: "object"
       properties:
@@ -351,52 +351,52 @@ components:
               type: "number"
     Information:
       type: "object"
-            properties:
-              label:
-                type: "string"
-              value:
-                type: "string"
-              type:
-                type: "string"
+      properties:
+        label:
+          type: "string"
+        value:
+          type: "string"
+        type:
+          type: "string"
     Logs:
       type: "object"
-            required:
-            - "group"
-            - "status"
-            - "dateReal"
-            - "dateInsert"
-            - "userInsert"
-            properties:
-              group:
-                type: "string"
-              planning:
-                type: "string"
-              contract:
-                type: "string"
-              status:
-                type: "string"
-              reason:
-                type: "string"
-              latitude:
-                type: "string"
-              longitude:
-                type: "string"
-              accuracy:
-                type: "number"
-              fence:
-                type: "number"
-              distanceFromPrevious:
-                type: "number"
-              timeFromPrevious:
-                type: "number"
-              dateReal:
-                type: "string"
-                format: "date-time"
-              dateInsert:
-                type: "string"
-                format: "date-time"
-              userInsert:
-                type: "string"
+      required:
+      - "group"
+      - "status"
+      - "dateReal"
+      - "dateInsert"
+      - "userInsert"
+      properties:
+        group:
+          type: "string"
+        planning:
+          type: "string"
+        contract:
+          type: "string"
+        status:
+          type: "string"
+        reason:
+          type: "string"
+        latitude:
+          type: "string"
+        longitude:
+          type: "string"
+        accuracy:
+          type: "number"
+        fence:
+          type: "number"
+        distanceFromPrevious:
+          type: "number"
+        timeFromPrevious:
+          type: "number"
+        dateReal:
+          type: "string"
+          format: "date-time"
+        dateInsert:
+          type: "string"
+          format: "date-time"
+        userInsert:
+          type: "string"
     Package:
       type: "array"
       items:
